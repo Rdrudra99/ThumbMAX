@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ThumbMAX - YouTube Thumbnail Downloader
+
+A modern, production-ready SaaS application for downloading YouTube thumbnails in multiple resolutions. Built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- 🎯 **Easy to Use** - Simply paste a YouTube URL and download thumbnails instantly
+- 🎨 **Multiple Resolutions** - Download thumbnails in Ultra HD (1080p), HD (720p), High Quality (480p), and Medium (360p)
+- ⚡ **Fast & Responsive** - Optimized for performance on all devices
+- 🎭 **Modern UI** - Clean, professional interface with smooth animations
+- ♿ **Accessible** - Built with ARIA labels and semantic HTML
+- 📱 **Mobile-First** - Fully responsive design that works on all screen sizes
+- 🔒 **No Registration** - Free to use without any sign-up required
+- 🚀 **Production-Ready** - Follows best practices for scalability and maintainability
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui
+- **Icons**: Lucide React
+- **Fonts**: Inter (Google Fonts)
 
 ## Getting Started
 
-First, run the development server:
+### Installation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+\`\`\`bash
+# Install dependencies
+bun install
+
+# Run development server
 bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+\`\`\`bash
+bun run build
+bun start
+\`\`\`
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+This project follows production-ready SaaS architecture with:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- ✅ Proper component separation
+- ✅ Custom hooks for business logic
+- ✅ Type-safe TypeScript throughout
+- ✅ Optimized performance
+- ✅ Accessibility built-in
+- ✅ SEO optimized
+- ✅ Sticky/floating header
+- ✅ Responsive design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
