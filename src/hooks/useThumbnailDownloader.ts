@@ -9,6 +9,7 @@ export function useThumbnailDownloader() {
   const [error, setError] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [downloadedId, setDownloadedId] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -45,16 +46,26 @@ export function useThumbnailDownloader() {
     filename: string,
     id: string
   ) => {
+    if (downloadingId) return;
+
     setDownloadingId(id);
+    setDownloadedId(null);
 
     try {
       const downloadFilename = `thumbnail-${videoId}-${filename}`;
       await downloadImage(imageUrl, downloadFilename);
+      setDownloadedId(id);
     } catch (error) {
       console.error("Download failed:", error);
     } finally {
+      setDownloadingId(null);
+
       // Keep the success state visible for a moment
-      setTimeout(() => setDownloadingId(null), 1500);
+      if (id) {
+        setTimeout(() => {
+          setDownloadedId((currentId) => (currentId === id ? null : currentId));
+        }, 1500);
+      }
     }
   };
 
@@ -63,6 +74,7 @@ export function useThumbnailDownloader() {
     setVideoId("");
     setError("");
     setDownloadingId(null);
+    setDownloadedId(null);
   };
 
   return {
@@ -72,6 +84,7 @@ export function useThumbnailDownloader() {
     error,
     isSearching,
     downloadingId,
+    downloadedId,
     handleSubmit,
     handleDownload,
     resetSearch,

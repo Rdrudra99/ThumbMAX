@@ -12,6 +12,7 @@ interface ThumbnailCardProps {
   quality: Quality;
   videoId: string;
   isDownloading: boolean;
+  isDownloaded: boolean;
   onDownload: (imageUrl: string, filename: string, id: string) => void;
 }
 
@@ -19,6 +20,7 @@ export function ThumbnailCard({
   quality,
   videoId,
   isDownloading,
+  isDownloaded,
   onDownload,
 }: ThumbnailCardProps) {
   const imageUrl = getThumbnailUrl(videoId, quality.filename);
@@ -61,12 +63,19 @@ export function ThumbnailCard({
           className={cn(
             "w-full h-14 sm:h-16 text-base sm:text-lg font-bold transition-all duration-300 rounded-full group/btn active:scale-[0.98]",
             isDownloading
+              ? "bg-zinc-700 hover:bg-zinc-700 text-white shadow-lg shadow-zinc-700/25"
+              : isDownloaded
               ? "bg-green-500 hover:bg-green-600 text-white shadow-lg shadow-green-500/25"
               : "bg-zinc-900 hover:bg-zinc-800 text-white shadow-xl shadow-zinc-900/20 hover:shadow-2xl hover:shadow-zinc-900/30 hover:-translate-y-0.5"
           )}
           aria-label={`Download ${quality.label} thumbnail`}
         >
           {isDownloading ? (
+            <span className="flex items-center gap-2.5 animate-in fade-in zoom-in duration-300">
+              <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin" strokeWidth={2.5} />
+              Downloading...
+            </span>
+          ) : isDownloaded ? (
             <span className="flex items-center gap-2.5 animate-in fade-in zoom-in duration-300">
               <Check className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={3} />
               Downloaded

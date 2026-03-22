@@ -18,6 +18,7 @@ export default function Home() {
     error,
     isSearching,
     downloadingId,
+    downloadedId,
     handleSubmit,
     handleDownload,
   } = useThumbnailDownloader();
@@ -38,6 +39,7 @@ export default function Home() {
         <ResultsSection
           videoId={videoId}
           downloadingId={downloadingId}
+          downloadedId={downloadedId}
           onDownload={handleDownload}
         />
 

@@ -7,12 +7,14 @@ import { CheckCircle2 } from "lucide-react"; // Ensure you have lucide-react ins
 interface ResultsSectionProps {
   videoId: string;
   downloadingId: string | null;
+  downloadedId: string | null;
   onDownload: (imageUrl: string, filename: string, id: string) => void;
 }
 
 export function ResultsSection({
   videoId,
   downloadingId,
+  downloadedId,
   onDownload,
 }: ResultsSectionProps) {
   if (!videoId) return null;
@@ -60,6 +62,7 @@ export function ResultsSection({
                 quality={quality}
                 videoId={videoId}
                 isDownloading={downloadingId === quality.id}
+                isDownloaded={downloadedId === quality.id}
                 onDownload={onDownload}
               />
             </div>
