@@ -4,28 +4,55 @@
  * @returns The video ID or null if not found
  */
 export function extractVideoID(url: string): string | null {
-  if (!url.trim()) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+
+  const getIdFromPath = (path: string): string | null => {
+    const segments = path.split("/").filter(Boolean);
+
+    // Supports /shorts/{id}, /live/{id}, /embed/{id}, /v/{id}
+    const markerIndex = segments.findIndex((segment) =>
+      ["shorts", "live", "embed", "v"].includes(segment)
+    );
+
+    if (markerIndex !== -1 && segments[markerIndex + 1]) {
+      const candidate = segments[markerIndex + 1];
+      return candidate.length === 11 ? candidate : null;
+    }
+
+    // Supports youtu.be/{id} and fallback to last path segment
+    const lastSegment = segments[segments.length - 1];
+    return lastSegment && lastSegment.length === 11 ? lastSegment : null;
+  };
 
   try {
+    // Support links pasted without protocol
+    const normalized = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+
     // Try URL parsing first
-    const urlObj = new URL(url);
+    const urlObj = new URL(normalized);
+    const host = urlObj.hostname.toLowerCase();
     
     // Handle youtu.be short URLs
-    if (urlObj.hostname.includes("youtu.be")) {
-      const id = urlObj.pathname.slice(1);
-      return id.length === 11 ? id : null;
+    if (host === "youtu.be" || host.endsWith(".youtu.be")) {
+      return getIdFromPath(urlObj.pathname);
     }
     
-    // Handle youtube.com URLs with v parameter
-    if (urlObj.hostname.includes("youtube.com")) {
+    // Handle youtube.com (including m./music./www.) URLs
+    if (host === "youtube.com" || host.endsWith(".youtube.com")) {
       const id = urlObj.searchParams.get("v");
-      return id && id.length === 11 ? id : null;
+      if (id && id.length === 11) {
+        return id;
+      }
+
+      return getIdFromPath(urlObj.pathname);
     }
   } catch {
     // If URL parsing fails, try regex
-    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[7].length === 11 ? match[7] : null;
+    const regExp =
+      /(?:youtube\.com\/(?:watch\?v=|shorts\/|live\/|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = trimmed.match(regExp);
+    return match?.[1] ?? null;
   }
 
   return null;
