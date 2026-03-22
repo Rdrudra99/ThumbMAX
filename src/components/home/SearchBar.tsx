@@ -48,7 +48,7 @@ export function SearchBar({
         <Button
           type="submit"
           disabled={isSearching || !url.trim()}
-          className="w-full sm:w-auto px-8 py-6 sm:py-3.5 bg-red-500 text-white rounded-[1.5rem] sm:rounded-full font-bold text-base hover:bg-red-600 transition-all shadow-md shadow-red-500/20 disabled:opacity-70 sm:min-w-[140px] h-auto active:scale-[0.98]"
+          className="w-full cursor-pointer sm:w-auto px-8 py-6 sm:py-3.5 bg-red-500 text-white rounded-[1.5rem] sm:rounded-full font-bold text-base hover:bg-red-600 transition-all shadow-md shadow-red-500/20 disabled:opacity-70 sm:min-w-[140px] h-auto active:scale-[0.98]"
           aria-label={isSearching ? "Searching..." : "Download thumbnail"}
         >
           {isSearching ? (
@@ -79,3 +79,8 @@ export function SearchBar({
     </form>
   );
 }
+
+
+
+
+// live video ke liye downlod nehi ho raha hai and alos for short video
